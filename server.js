@@ -11,7 +11,7 @@ const HOST = '0.0.0.0';
 const app = express();
 app.get('/', (req, res) => {
   res.send(
-    `<body style='background-color:#283E5B'><h1 style='color: orange;text-align:center'>Hello AWS edit ${os.hostname()}</h1></body>`
+    `<body style='background-color:#283E5B'><h1 style='color: orange;text-align:center'>Hello AWS CodePipeline 2 ${os.hostname()}</h1></body>`
   );
 });
 
