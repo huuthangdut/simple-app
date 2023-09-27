@@ -1,17 +1,19 @@
-#Build the image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/simple-app:v1', '.']
-  timeout: 180s
+steps:
+  # build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/simple-app:${COMMIT_SHA}', '.']
+  # push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/simple-app:${COMMIT_SHA}']
+  # deploy container image to GKE
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+    - run
+    - --filename=kubernetes-resource-file
+    - --image=gcr.io/$PROJECT_ID/simple-app:${COMMIT_SHA}
+    - --location=us-central1
+    - --cluster=autopilot-cluster-1
+images:
+  - 'gcr.io/$PROJECT_ID/simple-app'
 
-#Push the image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/simple-app:v1']
 
-# deploy container image to GKE
-- name: "gcr.io/cloud-builders/gke-deploy"
-  args:
-  - run
-  - --filename=K8s_configs/
-  - --image=gcr.io/$PROJECT_ID/simple-app:v1
-  - --location=us-central1
-  - --cluster=autopilot-cluster-1
