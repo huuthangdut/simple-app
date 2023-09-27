@@ -9,7 +9,6 @@ steps:
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
     - run
-    - --filename=kubernetes-resource-file
     - --image=gcr.io/$PROJECT_ID/simple-app:v1
     - --location=us-central1
     - --cluster=autopilot-cluster-1
