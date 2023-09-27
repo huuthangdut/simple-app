@@ -16,4 +16,5 @@ steps:
 images:
   - 'gcr.io/$PROJECT_ID/simple-app'
 
-
+options:
+  logging: CLOUD_LOGGING_ONLY
